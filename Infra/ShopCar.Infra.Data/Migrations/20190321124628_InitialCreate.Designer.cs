@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopCar.Infra.Data.Context;
 
 namespace ShopCar.Infra.Data.Migrations
 {
     [DbContext(typeof(ShopCarContext))]
-    partial class ShopCarContextModelSnapshot : ModelSnapshot
+    [Migration("20190321124628_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,28 +21,14 @@ namespace ShopCar.Infra.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("ShopCar.Domain.Entities.Brand", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Brand");
-                });
-
             modelBuilder.Entity("ShopCar.Domain.Entities.Car", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BrandId");
+                    b.Property<string>("Brand")
+                        .IsRequired();
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -53,32 +41,7 @@ namespace ShopCar.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BrandId");
-
                     b.ToTable("Car");
-                });
-
-            modelBuilder.Entity("ShopCar.Domain.Entities.Image", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ContentType")
-                        .IsRequired();
-
-                    b.Property<string>("Description")
-                        .IsRequired();
-
-                    b.Property<string>("Owner")
-                        .IsRequired();
-
-                    b.Property<string>("Path")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Image");
                 });
 
             modelBuilder.Entity("ShopCar.Domain.Entities.Proposal", b =>
@@ -103,14 +66,6 @@ namespace ShopCar.Infra.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Proposal");
-                });
-
-            modelBuilder.Entity("ShopCar.Domain.Entities.Car", b =>
-                {
-                    b.HasOne("ShopCar.Domain.Entities.Brand", "Brand")
-                        .WithMany()
-                        .HasForeignKey("BrandId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ShopCar.Domain.Entities.Proposal", b =>

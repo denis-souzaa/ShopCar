@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopCar.Infra.Data.Context;
 
 namespace ShopCar.Infra.Data.Migrations
 {
     [DbContext(typeof(ShopCarContext))]
-    partial class ShopCarContextModelSnapshot : ModelSnapshot
+    [Migration("20190321133623_Add_table_Image_and_Brand")]
+    partial class Add_table_Image_and_Brand
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
