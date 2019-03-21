@@ -19,7 +19,7 @@ namespace ShopCar.UI.Controllers
         [HttpGet]
         public ActionResult Get([FromQuery] PaginationModel model)
         {
-            var list = _carService.GetAll(x => x.Name, model.SearchTerm, "Name ASC", model.PageSize * (model.PageNumber - 1) , model.PageSize, x=>x.Brand);
+            var list = _carService.GetAll(x => x.Name, model.SearchTerm, "Year ASC", model.PageSize * (model.PageNumber - 1) , model.PageSize, x=>x.Brand);
 
             var totalItems = _carService.Count(x => x.Name, model.SearchTerm);
 
