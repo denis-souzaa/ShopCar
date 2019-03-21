@@ -19,9 +19,9 @@ namespace ShopCar.Service.Services
             _repository.Commit();
         }
 
-        public int Count(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
+        public int Count<TColumn>(Expression<Func<T, TColumn>> whereColumn, object whereValue, params Expression<Func<T, object>>[] includes)
         {
-            return _repository.Count(predicate, includes);
+            return _repository.Count(whereColumn,whereValue, includes);
         }
 
         public void Delete(int id)
@@ -34,9 +34,9 @@ namespace ShopCar.Service.Services
             return _repository.Get(predicate,includes);
         }
 
-        public IList<T> GetAll(Expression<Func<T, bool>> predicate, string order, int skip = 0, int take = 10, params Expression<Func<T, object>>[] includes)
+        public IList<T> GetAll<TColumn>(Expression<Func<T, TColumn>> whereColumn, object whereValue ,string order, int skip = 0, int take = 10, params Expression<Func<T, object>>[] includes)
         {
-            return _repository.GetAll(predicate, order,skip,take,includes);
+            return _repository.GetAll(whereColumn,whereValue,order,skip,take,includes);
         }
 
         public T Insert(T obj)

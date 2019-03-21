@@ -7,12 +7,14 @@ using Microsoft.EntityFrameworkCore;
 using ShopCar.Domain.Entities;
 using ShopCar.Domain.Interfaces.Repositories;
 using ShopCar.Infra.Data.Context;
+using ShopCar.Infra.Data.Util;
 
 namespace ShopCar.Infra.Data.Repository
 {
     public class RepositoryBase<T> : IRepository<T> where T : EntityBase
     {
         private readonly ShopCarContext _dbContext;
+        private readonly Reflection _reflection = new Reflection();
 
         public RepositoryBase(ShopCarContext dbContext)
         {
@@ -24,17 +26,18 @@ namespace ShopCar.Infra.Data.Repository
             _dbContext.SaveChanges();
         }
 
-        public int Count(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
+        public int Count<TColumn>(Expression<Func<T, TColumn>> whereColumn, object whereValue, params Expression<Func<T, object>>[] includes)
         {
             var query = _dbContext.Set<T>().AsNoTracking();
 
-            if (includes.Length <= 0) return query.Count();
+            if (includes.Length > 0)
+            {
+                query = includes.Aggregate(query, (current, inc) => current.Include(inc));
+            }
 
-            query = includes.Aggregate(query, (current, inc) => current.Include(inc));
+            if (whereValue == null) return query.Count();
 
-
-            if (predicate != null)
-                query = query.Where(predicate);
+            query = query.Where(whereValue is string ? $"{_reflection.GetFullPropertyName(whereColumn)}.Contains(@0)" : $"{_reflection.GetFullPropertyName(whereColumn)}.Equals(@0)", whereValue);
 
             return query.Count();
         }
@@ -61,7 +64,7 @@ namespace ShopCar.Infra.Data.Repository
             return query.FirstOrDefault();
         }
 
-        public IList<T> GetAll(Expression<Func<T, bool>> predicate, string order, int skip = 0, int take = 10, params Expression<Func<T, object>>[] includes)
+        public IList<T> GetAll<TColumn>(Expression<Func<T, TColumn>> whereColumn, object whereValue, string order, int skip = 0, int take = 10, params Expression<Func<T, object>>[] includes)
         {
             IQueryable<T> query = _dbContext.Set<T>().AsNoTracking().OrderBy(order);
 
@@ -70,8 +73,10 @@ namespace ShopCar.Infra.Data.Repository
                 query = includes.Aggregate(query, (current, inc) => current.Include(inc));
             }
 
-            if (predicate != null)
-                query = query.Where(predicate);
+            if (whereValue == null)
+                return query.Skip(skip).Take(take).ToList();
+
+            query = query.Where(whereValue is string ? $"{_reflection.GetFullPropertyName(whereColumn)}.Contains(@0)" : $"{_reflection.GetFullPropertyName(whereColumn)} == @0", whereValue);
 
             return query.Skip(skip).Take(take).ToList();
         }

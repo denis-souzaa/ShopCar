@@ -14,10 +14,10 @@ namespace ShopCar.Infra.DI.Extensions
             services.AddScoped(typeof(IService<>), typeof(ServiceBase<>));
 
             services.AddScoped<ICarRepository, CarRepository>();
-            services.AddScoped<CarService, CarService>();
+            services.AddScoped<ICarService, CarService>();
 
             services.AddScoped<IProposalRepository, ProposalRepository>();
-            services.AddScoped<ProposalService, ProposalService>();
+            services.AddScoped<IProposalService, ProposalService>();
 
             return services;
         }
