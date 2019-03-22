@@ -47,7 +47,7 @@
 
 .help-buttons{
     display: flex;
-    justify-content: end;
+    flex: flex-end;
     min-height: 53%;
 }
 

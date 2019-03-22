@@ -62,7 +62,7 @@
     height: auto;
     width: 50px;
     align-items: center;
-    justify-content: end;
+    flex: end;
 }
 
 .user-logged-profile{

@@ -13,7 +13,7 @@ const routes: Routes = [
       },
       {
         path: 'propostas',
-        loadChildren:'./proposa/proposal.module#ProposalModule'
+        loadChildren:'./proposal/proposal.module#ProposalModule'
       },
       {
         path: '',
