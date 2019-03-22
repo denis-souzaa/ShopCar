@@ -13,6 +13,7 @@ import { VehicleService } from '../../vehicle/vehicle.service';
 export class AddProposalComponent implements OnInit {
 
   form: FormGroup;
+  submitted = false;
 
   vehicle$: Observable<any>;
   vehicleLoading = false;
@@ -25,7 +26,7 @@ export class AddProposalComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm()
-    
+
     this.loadVehicles()
   }
 
@@ -39,21 +40,28 @@ export class AddProposalComponent implements OnInit {
     })
   }
 
-  get getControls() { return this.form.controls; }
+  get getValues() {
+		return this.form.controls;
+	}
 
   private loadVehicles() {
     this.vehicle$ = concat(
-        of([]), // default items
-        this.vehicleInput$.pipe(
-           debounceTime(200),
-           distinctUntilChanged(),
-           tap(() => this.vehicleLoading = true),
-           switchMap(term => this.vehicleService.getVehicles(term).pipe(
-               catchError(() => of([])), // empty list on error
-               tap(() => this.vehicleLoading = false)
-           )) 
-        )
+      of([]), // default items
+      this.vehicleInput$.pipe(
+        debounceTime(200),
+        distinctUntilChanged(),
+        tap(() => this.vehicleLoading = true),
+        switchMap(term => this.vehicleService.getVehicles(term).pipe(
+          catchError(() => of([])), // empty list on error
+          tap(() => this.vehicleLoading = false)
+        ))
+      )
     );
-}
+  }
+
+  onSubmit() {
+    this.submitted = true;
+    console.log('1')
+  }
 
 }

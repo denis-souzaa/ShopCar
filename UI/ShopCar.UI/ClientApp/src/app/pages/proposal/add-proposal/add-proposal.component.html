@@ -1,55 +1,61 @@
 <div class="modal-header">
-  <h4 class="modal-title pull-left"></h4>
+  <h4 class="modal-title pull-left">Nova Proposta</h4>
   <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-<div class="modal-body">
-  <form class="form-row" [formGroup]="form" (submit)="onSubmit()">
-    <div class="col-12 form-group">
-      <ng-select 
-      [items]="vehicle$ | async" 
-      bindLabel="name" 
-      bindValue="id" 
-      [loading]="vehicleLoading"
-      [typeahead]="vehicleInput$"
-      placeholder="Selecione o veículo" formControlName="car">
+<form class="form" [formGroup]="form" (submit)="onSubmit()">
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-12 form-group">
+        <ng-select [items]="vehicle$ | async" bindLabel="name" bindValue="id" [loading]="vehicleLoading"
+          [typeahead]="vehicleInput$" placeholder="Selecione o veículo" formControlName="car">
 
-        <ng-template ng-typetosearch-tmp>
-          <div class="ng-option disabled">
-            Digite para buscar...
-          </div>
-        </ng-template>
-        <ng-template ng-notfound-tmp let-searchTerm="searchTerm">
-          <div class="ng-option disabled">
-            Nenhum veículo encontrado.
-          </div>
-        </ng-template>
-        <ng-template ng-loadingtext-tmp let-searchTerm="searchTerm">
-          <div class="ng-option disabled">
-            Pesquisando por "{{searchTerm}}"
-          </div>
-        </ng-template>
-        <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+          <ng-template ng-typetosearch-tmp>
+            <div class="ng-option disabled">
+              Digite para buscar...
+            </div>
+          </ng-template>
+          <ng-template ng-notfound-tmp let-searchTerm="searchTerm">
+            <div class="ng-option disabled">
+              Nenhum veículo encontrado.
+            </div>
+          </ng-template>
+          <ng-template ng-loadingtext-tmp let-searchTerm="searchTerm">
+            <div class="ng-option disabled">
+              Pesquisando por "{{searchTerm}}"
+            </div>
+          </ng-template>
+          <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
             <h6 class="card-subtitle mb-2 text-muted">{{item.name}}</h6>
             <span class="badge badge-pill badge-primary">{{item.brand}}</span>
             <span class="badge badge-pill badge-default">{{item.year}}</span>
             <span class="badge badge-pill badge-success">{{item.price | currency:'BRL'}}</span>
-        </ng-template>
-      </ng-select>
+          </ng-template>
+        </ng-select>
+      </div>
     </div>
-    <div class="form-group col-6">
-      <input type="text" placeholder="Data" class="form-control" formControlName="dateProposal">
+    <div class="row">
+      <div class="form-group col-6">
+        <input type="text" placeholder="Data" class="form-control" formControlName="dateProposal">
+      </div>
+      <div class="form-group col-6">
+        <input type="text" placeholder="Valor da Proposta" class="form-control" formControlName="amount"
+          [ngClass]="{ 'is-invalid': submitted && getValues.amount.errors }">
+
+        <div *ngIf="submitted && getValues.amount.errors" class="invalid-feedback">
+          <div *ngIf="getValues.amount.errors.required">Campo Valor da Proposta é obrigatório.</div>
+        </div>
+      </div>
     </div>
-    <div class="form-group col-6">
-      <input type="text" placeholder="Valor da Proposta" class="form-control" formControlName="amount">
+    <div class="row">
+        <div class="form-group col-12">
+            <input type="text" placeholder="Nome do cliente" class="form-control" formControlName="client">
+          </div>
     </div>
-    <div class="form-group col-12">
-      <input type="text" placeholder="Nome do cliente" class="form-control" formControlName="client">
-    </div>
-  </form>
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Cancelar</button>
-  <button type="button" class="btn btn-success" (click)="add()">Salvar</button>
-</div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Cancelar</button>
+    <button type="button" class="btn btn-success">Salvar</button>
+  </div>
+</form>
