@@ -1,0 +1,9 @@
+<div class="login-page">
+  <div class="form">
+    <form class="login-form" [formGroup]="form"  (submit)="login()">
+      <input type="text" placeholder="Usuário" formControlName="usuario"/>
+      <input type="password" placeholder="Senha" formControlName="senha"/>
+      <button>login</button>
+    </form>
+  </div>
+</div>

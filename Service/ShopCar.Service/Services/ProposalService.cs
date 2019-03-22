@@ -22,7 +22,7 @@ namespace ShopCar.Service.Services
             if(proposal == null)
                 throw  new Exception("Não foi possível atualizar, proposta não encontrada");
 
-            proposal.CarId = obj.CarId;
+            proposal.VehicleId = obj.VehicleId;
             proposal.Amount = obj.Amount;
             proposal.Client = obj.Client;
             proposal.DateProposal = obj.DateProposal;

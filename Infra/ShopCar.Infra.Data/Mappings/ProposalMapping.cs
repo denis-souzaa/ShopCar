@@ -13,9 +13,9 @@ namespace ShopCar.Infra.Data.Mappings
             builder.Property(x => x.Amount).IsRequired();
             builder.Property(x => x.Client).HasMaxLength(150).IsRequired();
             builder.Property(x => x.DateProposal).IsRequired();
-            builder.Property(x => x.CarId).IsRequired();
+            builder.Property(x => x.VehicleId).IsRequired();
 
-            builder.HasOne(x => x.Car);
+            builder.HasOne(x => x.Vehicle);
         }
     }
 }

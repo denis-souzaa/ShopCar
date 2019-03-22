@@ -1,0 +1,67 @@
+<div class="panel-header panel-header-lg">
+
+</div>
+
+<div class="main-content">
+    <div class="container">
+        <div class="row page-titles">
+            <div class="col-md-5 align-self-center">
+
+                <h3 class="text-themecolor limit-text">Veículos</h3>
+
+            </div>
+            <div class="col-md-7 align-self-center">
+                <ol class="breadcrumb" style="justify-content: flex-end;">
+                    <li class="breadcrumb-item" title="Inicio"><a [routerLink]="'/'">Início</a></li>
+                    <li class="breadcrumb-item active">Veículos</li>
+                </ol>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <form (ngSubmit)="fetchData()">
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label>Nome</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="form-group col-sm-2 col-md-2">
+                            <button class="btn btn-info btn-block" type="submit" style="margin-top: 24px">
+                                <i class="fa fa-search"></i> Buscar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-body">
+                <p-table [columns]="cols" [value]="cars" [lazy]="true" (onLazyLoad)="loadAnunciosLazy($event)"
+                    [paginator]="true" [rows]="10" [totalRecords]="totalRecords" [loading]="loading">
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th>Marca</th>
+                            <th>Veículo</th>
+                            <th>Ano</th>
+                            <th>Valor</th>
+                            <th>Vendido</th>
+                            <th>Ações</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                        <tr>
+                            <td *ngFor="let col of columns">
+                                {{rowData[col.field]}}
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage" let-columns>
+                        <tr>
+                            <td [attr.colspan]="6" style="text-align:center;">
+                                Nenhum Veículo encontrado.
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>

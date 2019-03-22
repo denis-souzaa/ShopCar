@@ -1,9 +1,9 @@
-import { Injectable }                  from '@angular/core';
-import { HttpClient, HttpHeaders }     from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { mergeMap }                    from 'rxjs/operators';
-import { CoreService }                 from './core.service';
-import { LocalStorageService }         from '../_helpers/localstorage.service';
+import { mergeMap } from 'rxjs/operators';
+import { CoreService } from './core.service';
+import { LocalStorageService } from '../_helpers/localstorage.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -23,31 +23,41 @@ export class AuthenticationService extends CoreService {
     super(http);
   }
 
+  teste(){
+    this.loggedIn.next(true);
+  }
+
   login(user: any): Observable<any> {
-    return this.post(apiUrl, user, httpOptions)
-    .pipe(
-      mergeMap(result => {
-          return this.get('/api/seguranca/contexto', {
-            headers: new HttpHeaders({
-              'Authorization': `Bearer ${result.access_token}`
-            })
-          }).pipe(
-            mergeMap(({ data }) => {
-              this.loggedIn.next(true);
-              return LocalStorageService.setItem('contexto', {
-                access_token : result.access_token,
-                refresh_token: result.refresh_token,
-                ...data
-              });
-            })
-          );
-        }
-      )
-    );
+
+    if (user.usuario === 'admin' && user.senha === '123') {
+      this.loggedIn.next(true);
+    }
+
+    return user;
+    /*  return this.post(apiUrl, user, httpOptions)
+     .pipe(
+       mergeMap(result => {
+           return this.get('/api/seguranca/contexto', {
+             headers: new HttpHeaders({
+               'Authorization': `Bearer ${result.access_token}`
+             })
+           }).pipe(
+             mergeMap(({ data }) => {
+               this.loggedIn.next(true);
+               return LocalStorageService.setItem('auth-user', {
+                 access_token : result.access_token,
+                 refresh_token: result.refresh_token,
+                 ...data
+               });
+             })
+           );
+         }
+       )
+     ); */
   }
 
   refreshToken(): Observable<any> {
-    const refreshToken = LocalStorageService.getItem('contexto').refresh_token;
+    const refreshToken = LocalStorageService.getItem('auth-user').refresh_token;
 
     const user = new FormData();
 
@@ -55,29 +65,29 @@ export class AuthenticationService extends CoreService {
     user.append('refresh_token', refreshToken);
 
     return this.post(apiUrl, user, httpOptions)
-    .pipe(
-      mergeMap(result => {
+      .pipe(
+        mergeMap(result => {
           return this.get('/api/seguranca/contexto', {
             headers: new HttpHeaders({
               'Authorization': `Bearer ${result.access_token}`
             })
           })
-          .pipe(
-            mergeMap(({ data }) => {
-              this.loggedIn.next(true);
-              return LocalStorageService.setItem('contexto', {
-                access_token : result.access_token,
-                refresh_token: result.refresh_token,
-                ...data
-              });
-            })
-          );
+            .pipe(
+              mergeMap(({ data }) => {
+                this.loggedIn.next(true);
+                return LocalStorageService.setItem('auth-user', {
+                  access_token: result.access_token,
+                  refresh_token: result.refresh_token,
+                  ...data
+                });
+              })
+            );
         }
-      ));
+        ));
   }
 
   logout() {
-    localStorage.removeItem('contexto');
+    localStorage.removeItem('auth-user');
     this.loggedIn.next(false);
   }
 
@@ -86,6 +96,6 @@ export class AuthenticationService extends CoreService {
   }
 
   private hasToken(): boolean {
-    return !!localStorage.getItem('contexto');
+    return !!localStorage.getItem('auth-user');
   }
 }

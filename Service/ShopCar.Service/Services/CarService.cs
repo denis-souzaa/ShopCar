@@ -5,41 +5,41 @@ using ShopCar.Domain.Interfaces.Services;
 
 namespace ShopCar.Service.Services
 {
-    public class CarService : ServiceBase<Car>, ICarService
+    public class VehicleService : ServiceBase<Vehicle>, IVehicleService
     {
-        private readonly ICarRepository _carRepository;
+        private readonly IVehicleRepository _vehicleRepository;
 
-        public CarService(IRepository<Car> repository, ICarRepository carRepository) : base(repository)
+        public VehicleService(IRepository<Vehicle> repository, IVehicleRepository vehicleRepository) : base(repository)
         {
-            _carRepository = carRepository;
+            _vehicleRepository = vehicleRepository;
         }
 
-        public new Car Update(Car obj)
+        public new Vehicle Update(Vehicle obj)
         {
-            var car = _carRepository.Get(x => x.Id == obj.Id);
+            var car = _vehicleRepository.Get(x => x.Id == obj.Id);
 
             if(car == null)
                 throw  new Exception("Não foi possível atualizar, veiculo não encontrado.");
 
             car.BrandId = obj.BrandId;
-            car.Name = obj.Name;
+            car.Model = obj.Model;
             car.Price = obj.Price;
             car.Sold = obj.Sold;
             car.Year = obj.Year;
 
-            return _carRepository.Update(car);
+            return _vehicleRepository.Update(car);
         }
 
         public void UpdateSale(int id)
         {
-            var car = _carRepository.Get(x => x.Id == id);
+            var car = _vehicleRepository.Get(x => x.Id == id);
 
             if (car == null)
                 throw new Exception("Não foi possível atualizar o status, veiculo não encontrado.");
 
             car.Sold = !car.Sold;
 
-            _carRepository.Update(car);
+            _vehicleRepository.Update(car);
         }
     }
 }

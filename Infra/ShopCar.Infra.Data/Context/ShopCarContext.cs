@@ -20,7 +20,7 @@ namespace ShopCar.Infra.Data.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder){
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Car>(new CarMapping().Configure);
+            modelBuilder.Entity<Vehicle>(new VehicleMapping().Configure);
             modelBuilder.Entity<Proposal>(new ProposalMapping().Configure);
             modelBuilder.Entity<Brand>(new BrandMapping().Configure);
             modelBuilder.Entity<Image>(new ImageMapping().Configure);

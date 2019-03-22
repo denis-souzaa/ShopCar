@@ -13,8 +13,8 @@ namespace ShopCar.Infra.DI.Extensions
             services.AddScoped(typeof(IRepository<>), typeof(RepositoryBase<>));
             services.AddScoped(typeof(IService<>), typeof(ServiceBase<>));
 
-            services.AddScoped<ICarRepository, CarRepository>();
-            services.AddScoped<ICarService, CarService>();
+            services.AddScoped<IVehicleRepository, VehicleRepository>();
+            services.AddScoped<IVehicleService, VehicleService>();
 
             services.AddScoped<IProposalRepository, ProposalRepository>();
             services.AddScoped<IProposalService, ProposalService>();
@@ -27,6 +27,18 @@ namespace ShopCar.Infra.DI.Extensions
             services.AddScoped<ShopCarContext>();
 
             return services;
+        }
+
+        public static void ConfigureCors(this IServiceCollection services)
+        {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder => builder
+                                  .AllowAnyOrigin()
+                                  .AllowAnyMethod()
+                                  .AllowAnyHeader()
+                                  .AllowCredentials());
+            });
         }
     }
 }

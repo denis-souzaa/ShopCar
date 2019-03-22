@@ -1,3 +1,69 @@
-<p>
-  list-proposal works!
-</p>
+<div class="panel-header panel-header-lg">
+
+</div>
+
+<div class="main-content">
+    <div class="container">
+        <div class="row page-titles">
+            <div class="col-md-5 align-self-center">
+
+                <h3 class="text-themecolor limit-text">Propostas</h3>
+
+            </div>
+            <div class="col-md-7 align-self-center">
+                <ol class="breadcrumb" style="justify-content: flex-end;">
+                    <li class="breadcrumb-item" title="Inicio"><a [routerLink]="'/'">Início</a></li>
+                    <li class="breadcrumb-item active">Propostas</li>
+                </ol>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-12 text-right">
+                        <button class="btn btn-success" (click)="add()">
+                            <i class="fa fa-plus"></i> Adicionar
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <p-table [columns]="cols" [value]="proposal" [lazy]="true" (onLazyLoad)="loadProposalLazy($event)"
+                    [paginator]="true" [rows]="10" [totalRecords]="totalRecords" [loading]="isLoadingTable">
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th>Data</th>
+                            <th>Veículo</th>
+                            <th>Valor</th>
+                            <th>Cliente</th>
+                            <th>Ações</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-proposal>
+                        <tr>
+                            <td>{{proposal.dateProposal | date:'dd/MM/yyyy'}}</td>
+                            <td>{{proposal.brand}} {{proposal.car}}</td>
+                            <td>{{proposal.amount | currency:'BRL'}}</td>
+                            <td>{{proposal.client}}</td>
+                            <td>
+                                <button class="btn btn-default" title="Detalhes" (click)="detalhe(proposal)"><i
+                                        class="fa fa-search"></i></button>
+                                <button class="btn btn-primary" title="Editar" (click)="edit(proposal)"><i
+                                        class="fa fa-edit"></i></button>
+                                <button class="btn btn-danger" title="Excluir" (click)="remove(proposal)"><i
+                                        class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage" let-columns>
+                        <tr>
+                            <td [attr.colspan]="5" style="text-align:center;">
+                                Nenhuma Proposta encontrada.
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>

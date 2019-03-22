@@ -22,7 +22,8 @@ namespace ShopCar.UI
         {
             services.AddServiceLayer();
             services.AddServiceInfra();
-            
+            services.ConfigureCors();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // In production, the Angular files will be served from this directory
@@ -49,6 +50,8 @@ namespace ShopCar.UI
 
             app.ConfigureExceptionHandler();
             app.ConfigureCustomExceptionMiddleware();
+
+            app.UseCors(option => option.AllowAnyOrigin());
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

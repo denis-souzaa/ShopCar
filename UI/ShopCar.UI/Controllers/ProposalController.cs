@@ -21,7 +21,9 @@ namespace ShopCar.UI.Controllers
         [HttpGet]
         public ActionResult Get([FromQuery] PaginationModel model)
         {
-            var list = _proposalService.GetAll(x => x.Client, model.SearchTerm, "DateProposal ASC", model.PageSize * (model.PageNumber - 1), model.PageSize, x => x.Car, x=>x.Car.Brand);
+            model.PageNumber = model.PageNumber == 0 ? 1 : model.PageNumber;
+
+            var list = _proposalService.GetAll(x => x.Client, model.SearchTerm, model.Sort, model.PageSize * (model.PageNumber -1), model.PageSize, x => x.Vehicle, x=>x.Vehicle.Brand);
 
             var totalItems = _proposalService.Count(x => x.Client, model.SearchTerm);
 
@@ -32,8 +34,8 @@ namespace ShopCar.UI.Controllers
                 Items = list.Select(x => new
                 {
                     x.Id,
-                    x.Car?.Name,
-                    Brand = x.Car?.Brand?.Name,
+                    Vehicle =x.Vehicle?.Model,
+                    Brand = x.Vehicle?.Brand?.Name,
                     x.Client,
                     x.Amount,
                     x.DateProposal
@@ -75,7 +77,7 @@ namespace ShopCar.UI.Controllers
         {
             _proposalService.Delete(id);
 
-            return Ok("Proposta excluída com sucesso");
+            return Ok("Proposta excluï¿½da com sucesso");
         }
     }
 }

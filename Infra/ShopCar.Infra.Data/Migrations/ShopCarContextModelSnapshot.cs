@@ -34,30 +34,6 @@ namespace ShopCar.Infra.Data.Migrations
                     b.ToTable("Brand");
                 });
 
-            modelBuilder.Entity("ShopCar.Domain.Entities.Car", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BrandId");
-
-                    b.Property<string>("Name")
-                        .IsRequired();
-
-                    b.Property<decimal>("Price");
-
-                    b.Property<bool>("Sold");
-
-                    b.Property<int>("Year");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BrandId");
-
-                    b.ToTable("Car");
-                });
-
             modelBuilder.Entity("ShopCar.Domain.Entities.Image", b =>
                 {
                     b.Property<int>("Id")
@@ -89,35 +65,58 @@ namespace ShopCar.Infra.Data.Migrations
 
                     b.Property<decimal>("Amount");
 
-                    b.Property<int>("CarId");
-
                     b.Property<string>("Client")
                         .IsRequired()
                         .HasMaxLength(150);
 
                     b.Property<DateTime>("DateProposal");
 
+                    b.Property<int>("VehicleId");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CarId")
-                        .IsUnique();
+                    b.HasIndex("VehicleId");
 
                     b.ToTable("Proposal");
                 });
 
-            modelBuilder.Entity("ShopCar.Domain.Entities.Car", b =>
+            modelBuilder.Entity("ShopCar.Domain.Entities.Vehicle", b =>
                 {
-                    b.HasOne("ShopCar.Domain.Entities.Brand", "Brand")
-                        .WithMany()
-                        .HasForeignKey("BrandId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BrandId");
+
+                    b.Property<string>("Model")
+                        .IsRequired();
+
+                    b.Property<decimal>("Price");
+
+                    b.Property<bool>("Sold");
+
+                    b.Property<int>("Year");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BrandId");
+
+                    b.ToTable("Vehicle");
                 });
 
             modelBuilder.Entity("ShopCar.Domain.Entities.Proposal", b =>
                 {
-                    b.HasOne("ShopCar.Domain.Entities.Car", "Car")
-                        .WithOne("Proposal")
-                        .HasForeignKey("ShopCar.Domain.Entities.Proposal", "CarId")
+                    b.HasOne("ShopCar.Domain.Entities.Vehicle", "Vehicle")
+                        .WithMany("Proposal")
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ShopCar.Domain.Entities.Vehicle", b =>
+                {
+                    b.HasOne("ShopCar.Domain.Entities.Brand", "Brand")
+                        .WithMany()
+                        .HasForeignKey("BrandId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
