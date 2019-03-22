@@ -1,0 +1,82 @@
+.card{
+    border-radius: 0;
+}
+.card-description{
+    min-height: 600px;
+    border:6px solid #2e769e;
+}
+
+.card-header-description{
+    background-color: #2e769e;
+    border-bottom: 8px solid #ffb804;
+    border-radius: 0;
+}
+
+.card-header-custom{
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0;
+}
+
+.card-header-custom h1{
+    color:#ffffff;
+    font-weight: bold;
+}
+
+.card-body-login{
+    background-color: #2e769e;
+}
+
+.card-body-login h4{
+    color: #ffffff;
+    margin-bottom: 50px;
+    font-weight: 600;
+}
+
+.card-body-login label{
+    color: #ffffff;
+}
+
+.button-login{
+    border-radius: 0;
+    display: block;
+    margin: 0 auto;
+    width: 120px;
+    text-transform: uppercase;
+    color:#2e769e;
+}
+
+.help-buttons{
+    display: flex;
+    justify-content: end;
+    min-height: 53%;
+}
+
+.help-buttons a{
+    align-self: end;
+}
+
+.card-help, .card-about{
+    background-color: #2e769e;
+    color:#ffffff;
+    width: 100px;
+    margin-left: 10px;
+    padding: 9px;
+}
+
+.card-help, .card-about .fa{
+    font-size: 43px;
+}
+
+.navbar-text p{
+    margin-bottom: 0;
+    color:#000000;
+}
+
+footer {
+    height: 80px;
+    line-height: 80px;
+}
+
+.container {
+    height: calc(100% - 235px);
+}
