@@ -1,8 +1,8 @@
 <div class="login-page">
   <div class="form">
-    <form class="login-form" [formGroup]="form"  (submit)="login()">
-      <input type="text" placeholder="Usuário" formControlName="usuario"/>
-      <input type="password" placeholder="Senha" formControlName="senha"/>
+    <form class="login-form" [formGroup]="form" (submit)="login()">
+      <input type="text" placeholder="Usuário" formControlName="username" />
+      <input type="password" placeholder="Senha" formControlName="password" />
       <button>login</button>
     </form>
   </div>

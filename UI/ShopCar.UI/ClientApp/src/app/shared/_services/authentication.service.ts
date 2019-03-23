@@ -7,11 +7,11 @@ import { LocalStorageService } from '../_helpers/localstorage.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Authorization': `Basic ${btoa('front-end-angular:frontendangularpass')}`
+    'Content-Type': `application/json`
   }),
 };
 
-const apiUrl = `/oauth/token`;
+const apiUrl = `/api/Authentication/login`;
 
 @Injectable({
   providedIn: 'root'
@@ -23,67 +23,16 @@ export class AuthenticationService extends CoreService {
     super(http);
   }
 
-  teste(){
-    this.loggedIn.next(true);
-  }
-
   login(user: any): Observable<any> {
-
-    if (user.usuario === 'admin' && user.senha === '123') {
-      this.loggedIn.next(true);
-    }
-
-    return user;
-    /*  return this.post(apiUrl, user, httpOptions)
-     .pipe(
-       mergeMap(result => {
-           return this.get('/api/seguranca/contexto', {
-             headers: new HttpHeaders({
-               'Authorization': `Bearer ${result.access_token}`
-             })
-           }).pipe(
-             mergeMap(({ data }) => {
-               this.loggedIn.next(true);
-               return LocalStorageService.setItem('auth-user', {
-                 access_token : result.access_token,
-                 refresh_token: result.refresh_token,
-                 ...data
-               });
-             })
-           );
-         }
-       )
-     ); */
-  }
-
-  refreshToken(): Observable<any> {
-    const refreshToken = LocalStorageService.getItem('auth-user').refresh_token;
-
-    const user = new FormData();
-
-    user.append('grant_type', 'refresh_token');
-    user.append('refresh_token', refreshToken);
-
-    return this.post(apiUrl, user, httpOptions)
+    return this.post(apiUrl, user)
       .pipe(
         mergeMap(result => {
-          return this.get('/api/seguranca/contexto', {
-            headers: new HttpHeaders({
-              'Authorization': `Bearer ${result.access_token}`
-            })
+          this.loggedIn.next(true);
+          return LocalStorageService.setItem('auth-user', {
+            ...result
           })
-            .pipe(
-              mergeMap(({ data }) => {
-                this.loggedIn.next(true);
-                return LocalStorageService.setItem('auth-user', {
-                  access_token: result.access_token,
-                  refresh_token: result.refresh_token,
-                  ...data
-                });
-              })
-            );
-        }
-        ));
+        })
+      )
   }
 
   logout() {

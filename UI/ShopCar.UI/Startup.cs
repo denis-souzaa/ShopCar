@@ -23,6 +23,9 @@ namespace ShopCar.UI
             services.AddServiceLayer();
             services.AddServiceInfra();
             services.ConfigureCors();
+            services.AddAuthConfiguration(Configuration);
+            services.AddJsonOptionsConfiguration();
+            services.AddJwtConfiguration(Configuration);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -51,9 +54,18 @@ namespace ShopCar.UI
             app.ConfigureExceptionHandler();
             app.ConfigureCustomExceptionMiddleware();
 
-            app.UseCors(option => option.AllowAnyOrigin());
 
-            app.UseHttpsRedirection();
+            app.UseAuthentication();
+
+            app.UseCors(option =>
+            {
+                option.AllowAnyOrigin();
+                option.AllowAnyHeader();
+                option.AllowAnyMethod();
+                option.AllowCredentials();
+            });
+
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 

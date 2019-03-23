@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService } from '../../shared/_services';
+import { AuthenticationService, NotificationsService } from '../../shared/_services';
 import { Router } from '@angular/router';
+import { catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -14,12 +16,13 @@ export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private router: Router,
-    private authService: AuthenticationService) { }
+    private authService: AuthenticationService,
+    private notificationService: NotificationsService) { }
 
   ngOnInit() {
     this.form = this.fb.group({
-      usuario: ['', Validators.required],
-      senha: ['', Validators.required]
+      username: ['', Validators.required],
+      password: ['', Validators.required]
     });
   }
 
@@ -27,18 +30,21 @@ export class LoginComponent implements OnInit {
 
   login() {
 
-   
-  let usuario = this.getControls.usuario.value;
-  let senha = this.getControls.senha.value;
+    let username = this.getControls.username.value;
+    let password = this.getControls.password.value;
 
-  console.log(usuario, senha)
+    var user = {username, password};
 
-    if(usuario === 'admin' && senha === '123'){
-      this.authService.teste()
-      this.router.navigate([''])
-    }
-    else{
-      console.log('usuario senha invalido');
-    }
+    this.authService.login(user)
+      .pipe(catchError((error)=>{
+        console.log(error)
+         this.notificationService.onWarning(error.error)
+        return Observable.create();
+      }))
+      .subscribe(
+        data => {
+          this.router.navigate(['']);
+        }
+      );
   }
 }

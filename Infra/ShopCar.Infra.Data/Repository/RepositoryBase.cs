@@ -66,7 +66,10 @@ namespace ShopCar.Infra.Data.Repository
 
         public IList<T> GetAll<TColumn>(Expression<Func<T, TColumn>> whereColumn, object whereValue, string order, int skip = 0, int take = 10, params Expression<Func<T, object>>[] includes)
         {
-            IQueryable<T> query = _dbContext.Set<T>().AsNoTracking().OrderBy(order);
+            IQueryable<T> query = _dbContext.Set<T>().AsNoTracking();
+
+            if(!string.IsNullOrWhiteSpace(order))
+                query.OrderBy(order);
 
             if (includes.Length > 0)
             {

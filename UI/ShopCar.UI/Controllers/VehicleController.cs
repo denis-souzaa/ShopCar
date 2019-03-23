@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShopCar.Domain.Entities;
 using ShopCar.Domain.Interfaces.Services;
@@ -8,6 +9,8 @@ using ShopCar.UI.ViewModels;
 namespace ShopCar.UI.Controllers
 {
     [Route("api/veiculos")]
+    [ApiController]
+    [Authorize]
     public class VehicleController : Controller
     {
         private readonly IVehicleService _vehicleService;

@@ -1,7 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShopCar.Domain.Entities;
 using ShopCar.Domain.Interfaces.Services;
@@ -10,6 +10,8 @@ using ShopCar.UI.ViewModels;
 namespace ShopCar.UI.Controllers
 {
     [Route("api/propostas")]
+    [ApiController]
+    [Authorize]
     public class ProposalController : Controller
     {
         private readonly IProposalService _proposalService;
