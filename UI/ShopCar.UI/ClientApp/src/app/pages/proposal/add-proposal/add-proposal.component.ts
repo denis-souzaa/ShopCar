@@ -41,8 +41,8 @@ export class AddProposalComponent implements OnInit {
   }
 
   get getValues() {
-		return this.form.controls;
-	}
+    return this.form.controls;
+  }
 
   private loadVehicles() {
     this.vehicle$ = concat(
@@ -61,7 +61,10 @@ export class AddProposalComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    console.log('1')
+
+    if (this.form.invalid) {
+      return;
+    }
   }
 
 }

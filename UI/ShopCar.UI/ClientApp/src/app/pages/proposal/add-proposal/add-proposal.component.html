@@ -41,7 +41,7 @@
       </div>
       <div class="form-group col-6">
         <input type="text" placeholder="Valor da Proposta" class="form-control" formControlName="amount"
-          [ngClass]="{ 'is-invalid': submitted && getValues.amount.errors }">
+          [ngClass]="{ 'is-invalid': submitted && getValues.amount.errors }" />
 
         <div *ngIf="submitted && getValues.amount.errors" class="invalid-feedback">
           <div *ngIf="getValues.amount.errors.required">Campo Valor da Proposta é obrigatório.</div>
@@ -49,13 +49,18 @@
       </div>
     </div>
     <div class="row">
-        <div class="form-group col-12">
-            <input type="text" placeholder="Nome do cliente" class="form-control" formControlName="client">
-          </div>
+      <div class="form-group col-12">
+        <input type="text" placeholder="Nome do cliente" class="form-control" formControlName="client" 
+        [ngClass]="{ 'is-invalid': submitted && getValues.client.errors }" />
+
+        <div *ngIf="submitted && getValues.client.errors" class="invalid-feedback">
+          <div *ngIf="getValues.client.errors.required">Campo Nome do Cliente é obrigatório.</div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Cancelar</button>
-    <button type="button" class="btn btn-success">Salvar</button>
+    <button class="btn btn-success">Salvar</button>
   </div>
 </form>

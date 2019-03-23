@@ -37,7 +37,6 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(user)
       .pipe(catchError((error)=>{
-        console.log(error)
          this.notificationService.onWarning(error.error)
         return Observable.create();
       }))
