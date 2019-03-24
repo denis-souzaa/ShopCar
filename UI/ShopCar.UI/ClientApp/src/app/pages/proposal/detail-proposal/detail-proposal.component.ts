@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {BsModalRef} from "ngx-bootstrap";
 
 @Component({
   selector: 'app-detail-proposal',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetailProposalComponent implements OnInit {
 
-  constructor() { }
+  id: number
+  dateProposal: any
+  amount: any
+  client: string
+  vehicle: string
+  brand: string
+
+  constructor(public bsModalRef: BsModalRef) { }
 
   ngOnInit() {
   }
-
 }

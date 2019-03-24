@@ -12,7 +12,7 @@ namespace ShopCar.UI.Controllers
     [Route("api/propostas")]
     [ApiController]
     [Authorize]
-    public class ProposalController : Controller
+    public class ProposalController : ControllerBase
     {
         private readonly IProposalService _proposalService;
         public ProposalController(IProposalService proposalService)
@@ -52,9 +52,9 @@ namespace ShopCar.UI.Controllers
         [HttpGet("{id}")]
         public ActionResult Get(int id)
         {
-            var car = _proposalService.Get(x => x.Id == id);
+            var proposal = _proposalService.Get(x => x.Id == id);
 
-            return Ok(car);
+            return Ok(proposal);
         }
 
         [HttpPost]
@@ -62,7 +62,7 @@ namespace ShopCar.UI.Controllers
         {
             _proposalService.Insert(model);
 
-            return Ok("Proposta inserida com sucesso");
+            return Ok(new {message = "Proposta inserida com sucesso"});
         }
 
         [HttpPut]
@@ -70,7 +70,7 @@ namespace ShopCar.UI.Controllers
         {
             _proposalService.Update(model);
 
-            return Ok("Proposta atualizada com sucesso");
+            return Ok(new {message = "Proposta atualizada com sucesso"});
         }
 
        
@@ -79,7 +79,7 @@ namespace ShopCar.UI.Controllers
         {
             _proposalService.Delete(id);
 
-            return Ok("Proposta exclu�da com sucesso");
+            return Ok(new { message = "Proposta exclu�da com sucesso"});
         }
     }
 }

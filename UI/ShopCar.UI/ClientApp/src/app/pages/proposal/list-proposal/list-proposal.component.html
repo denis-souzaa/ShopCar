@@ -42,15 +42,15 @@
                     <ng-template pTemplate="body" let-proposal>
                         <tr>
                             <td>{{proposal.dateProposal | date:'dd/MM/yyyy'}}</td>
-                            <td>{{proposal.brand}} {{proposal.car}}</td>
+                            <td>{{proposal.brand}} {{proposal.vehicle}}</td>
                             <td>{{proposal.amount | currency:'BRL'}}</td>
                             <td>{{proposal.client}}</td>
                             <td>
-                                <button class="btn btn-default" title="Detalhes" (click)="detalhe(proposal)"><i
+                                <button class="btn btn-default" title="Detalhes" (click)="detail(proposal)"><i
                                         class="fa fa-search"></i></button>
                                 <button class="btn btn-primary" title="Editar" (click)="edit(proposal)"><i
                                         class="fa fa-edit"></i></button>
-                                <button class="btn btn-danger" title="Excluir" (click)="remove(proposal)"><i
+                                <button class="btn btn-danger" title="Excluir" (click)="remove(proposal.id)"><i
                                         class="fa fa-trash"></i></button>
                             </td>
                         </tr>

@@ -7,6 +7,10 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 
+import { defineLocale } from 'ngx-bootstrap/chronos';
+import { ptBrLocale } from 'ngx-bootstrap/locale';
+defineLocale('pt-br', ptBrLocale)
+
 import { AppComponent } from './app.component';
 
 import { LoginComponent } from './pages/login/login.component';
@@ -15,6 +19,7 @@ import { ErrorInterceptor } from './shared/_helpers/error.interceptor';
 
 import { NotificationsService } from './shared/_services/notifications.service';
 import { SnotifyService, ToastDefaults, SnotifyModule } from 'ng-snotify';
+import {NgxCurrencyModule} from "ngx-currency";
 
 @NgModule({
   imports: [
@@ -24,7 +29,7 @@ import { SnotifyService, ToastDefaults, SnotifyModule } from 'ng-snotify';
     SnotifyModule,
     HttpClientModule,
     AppRoutingModule,
-    NgbModule.forRoot()
+    NgbModule
   ],
   declarations: [
     AppComponent,

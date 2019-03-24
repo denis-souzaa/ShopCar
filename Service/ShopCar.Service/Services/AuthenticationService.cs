@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using CryptoHelper;
-using Microsoft.IdentityModel.Tokens;
 using ShopCar.Domain.Entities;
 using ShopCar.Domain.Interfaces.Services;
 

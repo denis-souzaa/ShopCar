@@ -1,3 +1,5 @@
+<script
+  src="../../../../../../../../../../Downloads/tor-browser_en-US/frontend/src/app/pages/item-plano-aquisicao/add/add.component.ts"></script>
 <div class="modal-header">
   <h4 class="modal-title pull-left">Nova Proposta</h4>
   <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
@@ -7,9 +9,15 @@
 <form class="form" [formGroup]="form" (submit)="onSubmit()">
   <div class="modal-body">
     <div class="row">
-      <div class="col-12 form-group">
-        <ng-select [items]="vehicle$ | async" bindLabel="name" bindValue="id" [loading]="vehicleLoading"
-          [typeahead]="vehicleInput$" placeholder="Selecione o veículo" formControlName="car">
+      <div class="col-12">
+        <div class="form-group">
+          <ng-select [items]="vehicle$ | async" 
+          bindLabel="name" bindValue="id"
+          [loading]="vehicleLoading"
+          [typeahead]="vehicleInput$"
+          placeholder="Selecione o veículo" 
+          formControlName="vehicle"
+          [ngClass]="{ 'is-invalid': submitted && getValues.vehicle.errors }">
 
           <ng-template ng-typetosearch-tmp>
             <div class="ng-option disabled">
@@ -33,15 +41,24 @@
             <span class="badge badge-pill badge-success">{{item.price | currency:'BRL'}}</span>
           </ng-template>
         </ng-select>
+        <div *ngIf="submitted && getValues.vehicle.errors" class="invalid-feedback d-block">
+          <div *ngIf="getValues.vehicle.errors.required">O campo Veículo é obrigatório.</div>
+        </div>
       </div>
+    </div>
     </div>
     <div class="row">
       <div class="form-group col-6">
-        <input type="text" placeholder="Data" class="form-control" formControlName="dateProposal">
+        <input type="text" placeholder="Data" class="form-control" formControlName="dateProposal"
+        bsDatepicker [bsConfig]="bsConfig" [ngClass]="{ 'is-invalid': submitted && getValues.dateProposal.errors }"/>
+        
+        <div *ngIf="submitted && getValues.dateProposal.errors" class="invalid-feedback">
+          <div *ngIf="getValues.dateProposal.errors.required">Campo Data da Proposta é obrigatório.</div>
+        </div>
       </div>
       <div class="form-group col-6">
         <input type="text" placeholder="Valor da Proposta" class="form-control" formControlName="amount"
-          [ngClass]="{ 'is-invalid': submitted && getValues.amount.errors }" />
+          [ngClass]="{ 'is-invalid': submitted && getValues.amount.errors }" currencyMask />
 
         <div *ngIf="submitted && getValues.amount.errors" class="invalid-feedback">
           <div *ngIf="getValues.amount.errors.required">Campo Valor da Proposta é obrigatório.</div>

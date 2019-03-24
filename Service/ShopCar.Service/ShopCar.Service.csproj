@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <PackageReference Include="CryptoHelper" Version="3.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>

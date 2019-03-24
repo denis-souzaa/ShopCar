@@ -39,7 +39,6 @@ export class NavbarComponent implements OnInit {
     });
 
     const user = LocalStorageService.getItem('auth-user') || undefined;
-    console.log(user)
     if(user){
       this.userLogged = user.userName
     }
