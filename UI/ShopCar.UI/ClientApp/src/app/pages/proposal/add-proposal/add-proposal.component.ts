@@ -1,11 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { BsModalService, ModalOptions, BsModalRef, BsDatepickerConfig, BsLocaleService } from "ngx-bootstrap";
+import { BsModalService, BsModalRef, BsDatepickerConfig} from "ngx-bootstrap";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable, Subject, concat, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap, switchMap, catchError } from 'rxjs/operators';
 import { VehicleService } from '../../vehicle/vehicle.service';
 import { ProposalService } from '../proposal.service';
 import { NotificationsService } from 'src/app/shared/_services';
+import {formatDate} from "@angular/common";
+import { registerLocaleData } from '@angular/common';
+import localeptBr from '@angular/common/locales/pt-PT';
+
+registerLocaleData(localeptBr, 'ptBR');
 
 @Component({
   selector: 'app-add-proposal',
@@ -13,6 +18,11 @@ import { NotificationsService } from 'src/app/shared/_services';
   styles: []
 })
 export class AddProposalComponent implements OnInit {
+
+  id: number
+  dateProposal: any
+  amount: any
+  client: string
 
   form: FormGroup;
   submitted = false;
@@ -38,7 +48,7 @@ export class AddProposalComponent implements OnInit {
       dateInputFormat:"DD/MM/YYYY",
       locale:'pt-br'
     });
-    
+
     this.buildForm()
 
     this.loadVehicles()
@@ -46,11 +56,11 @@ export class AddProposalComponent implements OnInit {
 
   buildForm() {
     this.form = this.fb.group({
-      id: [undefined],
-      dateProposal: [undefined, Validators.required],
+      id: [this.id],
+      dateProposal: [this.dateProposal && formatDate(this.dateProposal,'dd/MM/yyyy','ptBR'), Validators.required],
       vehicle: [undefined, Validators.required],
-      amount: [undefined, Validators.required],
-      client: [undefined, Validators.required]
+      amount: [this.amount, Validators.required],
+      client: [this.client, Validators.required]
     })
   }
 
