@@ -37,8 +37,6 @@ export class AddVehicleComponent implements OnInit {
     
     this.isEdit = this.id && true || false
 
-    console.log(this.isEdit)
-
     this.getBrands()
     this.buildForm()
   }

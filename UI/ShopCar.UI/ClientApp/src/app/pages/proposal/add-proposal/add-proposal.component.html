@@ -10,7 +10,7 @@
       <div class="col-12">
         <div class="form-group">
           <ng-select [items]="vehicle$ | async" 
-          bindLabel="model" bindValue="id"
+          bindLabel="model" 
           [loading]="vehicleLoading"
           [typeahead]="vehicleInput$"
           placeholder="Selecione o veículo" 
@@ -78,4 +78,5 @@
     <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Cancelar</button>
     <button class="btn btn-success">Salvar</button>
   </div>
+  <p>{{form.value | json}}</p>
 </form>

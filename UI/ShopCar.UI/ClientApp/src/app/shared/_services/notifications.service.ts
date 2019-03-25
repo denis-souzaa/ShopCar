@@ -31,7 +31,7 @@ export class NotificationsService {
       ...this.defaultConfig,
       ...customConfig
     };
-    console.log(conf);
+    
     return this.snotifyService.success(msg, 'Sucesso', conf);
   }
 

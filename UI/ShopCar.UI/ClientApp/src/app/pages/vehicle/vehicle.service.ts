@@ -16,6 +16,10 @@ export class VehicleService extends CoreService {
         super(http);
     }
 
+    getVehicleById(id: number): Observable<any>{
+      return this.get(`${apiUrl}/${id}`)
+    }
+
     getVehicle(params: PaginationParams): Observable<any> {
         return this.get(`${apiUrl}`, {params: {...params}})
     }

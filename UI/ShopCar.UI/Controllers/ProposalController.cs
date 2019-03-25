@@ -37,6 +37,7 @@ namespace ShopCar.UI.Controllers
                 {
                     x.Id,
                     Vehicle =x.Vehicle?.Model,
+                    x.VehicleId,
                     Brand = x.Vehicle?.Brand?.Name,
                     x.Client,
                     x.Amount,

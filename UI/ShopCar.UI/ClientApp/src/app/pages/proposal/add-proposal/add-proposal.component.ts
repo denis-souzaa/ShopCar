@@ -23,9 +23,12 @@ export class AddProposalComponent implements OnInit {
   dateProposal: any
   amount: any
   client: string
+  vehicleId: number
+  teste: any
 
   form: FormGroup;
   submitted = false;
+  isEdit: boolean
 
   vehicle$: Observable<any>;
   vehicleLoading = false;
@@ -49,16 +52,19 @@ export class AddProposalComponent implements OnInit {
       locale:'pt-br'
     });
 
+    this.isEdit = this.id && true || false
     this.buildForm()
 
     this.loadVehicles()
+    
+    this.isEdit && this.loadVehicleById(this.vehicleId)
   }
 
   buildForm() {
     this.form = this.fb.group({
       id: [this.id],
       dateProposal: [this.dateProposal && formatDate(this.dateProposal,'dd/MM/yyyy','ptBR'), Validators.required],
-      vehicle: [undefined, Validators.required],
+      vehicle: [this.vehicleId, Validators.required],
       amount: [this.amount, Validators.required],
       client: [this.client, Validators.required]
     })
@@ -66,6 +72,12 @@ export class AddProposalComponent implements OnInit {
 
   get getValues() {
     return this.form.controls;
+  }
+
+  private loadVehicleById(id: number){
+    this.vehicleService.getVehicleById(id).subscribe(data =>{
+      this.getValues.vehicle.setValue(data)
+    })
   }
 
   private loadVehicles() {
@@ -91,11 +103,11 @@ export class AddProposalComponent implements OnInit {
     }
 
     const proposal = {
-      "vehicleId": this.getValues.vehicle.value,
+      "vehicleId": this.getValues.vehicle.value.id,
       "dateProposal": this.getValues.dateProposal.value,
       "client": this.getValues.client.value,
       "amount":this.getValues.amount.value
-    }
+    };
 
     this.proposalService.addProposal(proposal)
       .subscribe(
