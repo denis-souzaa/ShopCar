@@ -36,6 +36,7 @@ namespace ShopCar.UI.Controllers
                 {
                     x.Id,
                     Brand = x.Brand?.Name,
+                    BrandId = x.Brand?.Id,
                     x.Model,
                     x.Year,
                     x.Price,

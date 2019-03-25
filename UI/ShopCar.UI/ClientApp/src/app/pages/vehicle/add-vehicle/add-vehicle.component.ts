@@ -22,7 +22,9 @@ export class AddVehicleComponent implements OnInit {
   price: number
   sold: boolean
 
-  brand: any
+  isEdit: boolean
+
+  brands: any
 
   constructor(private modalService: BsModalService, 
             private fb: FormBuilder,
@@ -32,14 +34,19 @@ export class AddVehicleComponent implements OnInit {
             private brandService: BrandService) { }
 
   ngOnInit() {
-    this.buildForm()
+    
+    this.isEdit = this.id && true || false
+
+    console.log(this.isEdit)
+
     this.getBrands()
+    this.buildForm()
   }
 
   buildForm() {
     this.form = this.fb.group({
       id: [this.id],
-      brand: [this.brandId, Validators.required],
+      brand: [this.brandId && this.brandId || undefined, Validators.required],
       model: [this.model, Validators.required],
       year: [this.year, Validators.required],
       price: [this.price, Validators.required],
@@ -52,7 +59,7 @@ export class AddVehicleComponent implements OnInit {
   }
 
   getBrands(){
-    this.brandService.getBrand().subscribe(data => this.brand = data)
+    this.brandService.getBrand().subscribe(data => this.brands = data)
   }
 
   onSubmit() {
@@ -69,9 +76,9 @@ export class AddVehicleComponent implements OnInit {
       "year": this.getValues.year.value,
       "price":this.getValues.price.value,
       "sold":this.getValues.sold.value
-    }
+    };
 
-    this.vehicleService.addVehicle(vehicle)
+    (!this.isEdit ? this.vehicleService.addVehicle(vehicle) : this.vehicleService.editVehicle(vehicle))
       .subscribe(
         result => {
           this.notificationService.onSuccess(result.message);

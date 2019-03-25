@@ -71,12 +71,13 @@ export class ListVehicleComponent implements OnInit {
     this.modalService.onHide.subscribe(_ => this.fetchVehicles())
   }
 
-  edit(proposal: any) {
-    this.openModal(proposal, AddVehicleComponent)
+  edit(vehicle: any) {
+    this.openModal(vehicle, AddVehicleComponent)
+    this.modalService.onHide.subscribe(_ => this.fetchVehicles())
   }
 
-  detail(proposal: any) {
-    this.openModal(proposal, DetailVehicleComponent)
+  detail(vehicle: any) {
+    this.openModal(vehicle, DetailVehicleComponent)
   }
 
   remove(id: number) {

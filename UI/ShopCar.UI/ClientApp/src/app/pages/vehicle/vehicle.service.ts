@@ -11,7 +11,7 @@ const apiUrl = `/api/veiculos`;
     providedIn: 'root'
 })
 export class VehicleService extends CoreService {
-
+  
     constructor(private http: HttpClient) {
         super(http);
     }
@@ -28,6 +28,10 @@ export class VehicleService extends CoreService {
 
     addVehicle(vehicle: any): Observable<any> {
       return this.post(`${apiUrl}`,vehicle)
+    }
+
+    editVehicle(vehicle: any): Observable<any> {
+      return this.put(`${apiUrl}`,vehicle)
     }
 
     removeVehicle(id: number): Observable<any> {
