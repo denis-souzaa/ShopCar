@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <p-table [columns]="cols" [value]="proposal" [lazy]="true" (onLazyLoad)="loadProposalLazy($event)"
+                <p-table [value]="proposal" [lazy]="true" (onLazyLoad)="loadProposalLazy($event)"
                     [paginator]="true" [rows]="10" [totalRecords]="totalRecords" [loading]="isLoadingTable">
                     <ng-template pTemplate="header" let-columns>
                         <tr>

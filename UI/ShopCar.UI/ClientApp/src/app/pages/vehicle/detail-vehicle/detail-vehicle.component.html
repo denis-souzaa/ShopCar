@@ -27,7 +27,7 @@
   </div>
   <hr />
   <h4>Propostas</h4>
-  <p-table [columns]="cols" [value]="proposal" [lazy]="true" (onLazyLoad)="loadProposalLazy($event)" [paginator]="true"
+  <p-table  [value]="proposal" [lazy]="true" (onLazyLoad)="loadProposalLazy($event)" [paginator]="true"
     [rows]="10" [totalRecords]="totalRecords" [loading]="isLoadingTable">
     <ng-template pTemplate="header" let-columns>
       <tr>

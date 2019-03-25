@@ -24,7 +24,6 @@ export class AddProposalComponent implements OnInit {
   amount: any
   client: string
   vehicleId: number
-  teste: any
 
   form: FormGroup;
   submitted = false;
