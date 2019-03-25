@@ -25,6 +25,7 @@
             "styles": [
               "src/assets/scss/now-ui-dashboard.scss",
               "src/assets/demo/demo.css",
+              "src/assets/dist/pretty-checkbox.min.css",
               "node_modules/primeng/resources/themes/nova-light/theme.css",
               "node_modules/primeng/resources/primeng.min.css"
             ],

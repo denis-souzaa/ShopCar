@@ -1,5 +1,3 @@
-<script
-  src="../../../../../../../../../../Downloads/tor-browser_en-US/frontend/src/app/pages/item-plano-aquisicao/add/add.component.ts"></script>
 <div class="modal-header">
   <h4 class="modal-title pull-left">Nova Proposta</h4>
   <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
@@ -12,7 +10,7 @@
       <div class="col-12">
         <div class="form-group">
           <ng-select [items]="vehicle$ | async" 
-          bindLabel="name" bindValue="id"
+          bindLabel="model" bindValue="id"
           [loading]="vehicleLoading"
           [typeahead]="vehicleInput$"
           placeholder="Selecione o veículo" 
@@ -35,7 +33,7 @@
             </div>
           </ng-template>
           <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-            <h6 class="card-subtitle mb-2 text-muted">{{item.name}}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">{{item.model}}</h6>
             <span class="badge badge-pill badge-primary">{{item.brand}}</span>
             <span class="badge badge-pill badge-default">{{item.year}}</span>
             <span class="badge badge-pill badge-success">{{item.price | currency:'BRL'}}</span>

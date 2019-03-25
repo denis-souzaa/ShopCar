@@ -32,7 +32,7 @@ export class CoreService {
 	}
 
 	protected patch(apiUrl: string, instance: any): Observable<any> {
-		return this.coreHttp.patch(this.baseUrl.concat(apiUrl), instance);
+		return this.coreHttp.patch(this.baseUrl.concat(apiUrl).concat(`/${instance}`), null);
 	}
 
 	protected delete(apiUrl: string, instance: any): Observable<any> {

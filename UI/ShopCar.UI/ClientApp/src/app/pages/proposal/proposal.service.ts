@@ -19,6 +19,10 @@ export class ProposalService extends CoreService {
         return this.get(`${apiUrl}`, {params: {...params}})
     }
 
+    getProposalByVehicle(id: number, params: PaginationParams): Observable<any> {
+      return this.get(`${apiUrl}/${id}/vehicle`, {params: {...params}})
+    }
+
     addProposal(proposal: any): Observable<any> {
         return this.post(`${apiUrl}`,proposal)
     }

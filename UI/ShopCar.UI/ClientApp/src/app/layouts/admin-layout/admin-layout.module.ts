@@ -17,6 +17,9 @@ import {ModalModule} from 'ngx-bootstrap';
 import {AddProposalComponent} from 'src/app/pages/proposal/add-proposal/add-proposal.component';
 import {NgxCurrencyModule} from "ngx-currency";
 import {DetailProposalComponent} from "../../pages/proposal/detail-proposal/detail-proposal.component";
+import {SoldPipe} from '../../shared/_pipes' 
+import { AddVehicleComponent } from 'src/app/pages/vehicle/add-vehicle/add-vehicle.component';
+import { DetailVehicleComponent } from 'src/app/pages/vehicle/detail-vehicle/detail-vehicle.component';
 
 defineLocale('pt-br', deLocale);
 
@@ -57,13 +60,16 @@ const MODULOS_EXTERNOS = [
     BsDatepickerModule.forRoot()
   ],
   declarations: [
+    SoldPipe,
     AdminLayoutComponent,
     ListVehicleComponent,
     ListProposalComponent,
+    AddVehicleComponent,
     AddProposalComponent,
-    DetailProposalComponent
+    DetailProposalComponent,
+    DetailVehicleComponent
   ],
-  entryComponents: [AddProposalComponent, DetailProposalComponent]
+  entryComponents: [AddProposalComponent, DetailProposalComponent, AddVehicleComponent, DetailVehicleComponent]
 })
 
 export class AdminLayoutModule {

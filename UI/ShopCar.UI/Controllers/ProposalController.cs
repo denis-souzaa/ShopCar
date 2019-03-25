@@ -49,6 +49,32 @@ namespace ShopCar.UI.Controllers
             return Ok(result);
         }
 
+        [HttpGet("{id}/vehicle")]
+        public ActionResult Get([FromQuery] PaginationModel model, int id)
+        {
+            model.PageNumber = model.PageNumber == 0 ? 1 : model.PageNumber;
+
+            var list = _proposalService.GetAll(x => x.VehicleId == id, model.Sort, model.PageSize * (model.PageNumber -1), model.PageSize);
+
+            var totalItems = _proposalService.Count(x => x.VehicleId == id);
+
+            var totalPages = (double)totalItems / model.PageSize;
+
+            var result = new
+            {
+                Items = list.Select(x => new
+                {
+                    x.Client,
+                    x.Amount,
+                    x.DateProposal
+                }),
+                TotalPages = (int)Math.Ceiling(totalPages),
+                TotalItems = totalItems
+            };
+
+            return Ok(result);
+        }
+
         [HttpGet("{id}")]
         public ActionResult Get(int id)
         {

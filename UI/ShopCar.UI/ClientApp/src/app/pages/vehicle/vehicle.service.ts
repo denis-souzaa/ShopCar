@@ -11,7 +11,7 @@ const apiUrl = `/api/veiculos`;
     providedIn: 'root'
 })
 export class VehicleService extends CoreService {
-  
+
     constructor(private http: HttpClient) {
         super(http);
     }
@@ -21,9 +21,20 @@ export class VehicleService extends CoreService {
     }
 
     getVehicles(term: string): Observable<any> {
-      const params = new PaginationParams(0, 5, "Name ASC").setFilter(term)
 
-      return term ? this.get(`${apiUrl}`, {params: {...params}})
-              .pipe(mergeMap((response) => (response ? of(response.items):of([])))) : of([])
+      return term ? this.get(`${apiUrl}/${term}/busca`)
+              .pipe(mergeMap((response) => (response ? of(response):of([])))) : of([])
+    }
+
+    addVehicle(vehicle: any): Observable<any> {
+      return this.post(`${apiUrl}`,vehicle)
+    }
+
+    removeVehicle(id: number): Observable<any> {
+      return this.delete(`${apiUrl}`, id)
+    }
+
+    soldVehicle(id: number): Observable<any> {
+      return this.patch(`${apiUrl}`, id);
     }
 }

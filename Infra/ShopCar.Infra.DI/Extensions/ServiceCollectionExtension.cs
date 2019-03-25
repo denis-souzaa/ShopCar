@@ -29,6 +29,9 @@ namespace ShopCar.Infra.DI.Extensions
             services.AddScoped<IProposalRepository, ProposalRepository>();
             services.AddScoped<IProposalService, ProposalService>();
 
+            services.AddScoped<IBrandRepository, BrandRepository>();
+            services.AddScoped<IBrandService, BrandService>();
+
             return services;
         }
 

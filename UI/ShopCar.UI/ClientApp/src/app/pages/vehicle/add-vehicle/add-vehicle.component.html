@@ -1,11 +1,73 @@
-<div class="container-custom">
-  <div class="row page-titles">
-      <div class="col-md-5 align-self-center">
-          <h3 class="text-themecolor limit-text"
-              title="Indicadores de Projeto">Visualizar item do Plano de Aquisição</h3>
-      </div>
-  </div>
-  <div class="card-no-border card mb-3">
-      
-  </div>
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Novo Veículo</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div>
+<form class="form" [formGroup]="form" (submit)="onSubmit()">
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <ng-select [items]="brand" bindValue="id" bindLabel="name" labelForId="id" placeholder="Selecione a marca"
+            formControlName="brand">
+            <ng-template ng-notfound-tmp let-searchTerm="searchTerm">
+              <div class="ng-option disabled">
+                Nenhum item encontrado.
+              </div>
+            </ng-template>
+          </ng-select>
+          <div *ngIf="submitted && getValues.brand.errors" class="invalid-feedback d-block">
+            <div *ngIf="getValues.brand.errors.required">O campo Marca é obrigatório.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-4">
+        <input type="text" placeholder="Modelo" class="form-control" formControlName="model"
+          [ngClass]="{ 'is-invalid': submitted && getValues.model.errors }" />
+
+        <div *ngIf="submitted && getValues.model.errors" class="invalid-feedback">
+          <div *ngIf="getValues.model.errors.required">Campo Modelo é obrigatório.</div>
+        </div>
+      </div>
+      <div class="form-group col-4">
+        <input type="text" placeholder="Ano do Veículo" class="form-control" formControlName="year"
+          [ngClass]="{ 'is-invalid': submitted && getValues.year.errors }" />
+
+        <div *ngIf="submitted && getValues.year.errors" class="invalid-feedback">
+          <div *ngIf="getValues.year.errors.required">Campo Ano do Veículo é obrigatório.</div>
+        </div>
+      </div>
+      <div class="form-group col-4">
+        <input type="text" placeholder="Preço" class="form-control" formControlName="price"
+          [ngClass]="{ 'is-invalid': submitted && getValues.price.errors }" currencyMask />
+
+        <div *ngIf="submitted && getValues.price.errors" class="invalid-feedback">
+          <div *ngIf="getValues.price.errors.required">Campo Preço é obrigatório.</div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="pretty p-svg p-curve">
+          <input type="checkbox" class="form-control" formControlName="sold"/>
+          <div class="state p-success">
+            <!-- svg path -->
+            <svg class="svg svg-icon" viewBox="0 0 20 20">
+              <path
+                d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z"
+                style="stroke: white;fill:white;"></path>
+            </svg>
+            <label>Veículo vendido ?</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Cancelar</button>
+    <button class="btn btn-success">Salvar</button>
+  </div>
+</form>

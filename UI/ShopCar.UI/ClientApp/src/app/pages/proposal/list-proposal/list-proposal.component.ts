@@ -16,8 +16,7 @@ import {DetailProposalComponent} from "../detail-proposal/detail-proposal.compon
 export class ListProposalComponent implements OnInit {
 
   proposal: any;
-  saldos: any;
-  totalItems: number;
+  totalRecords: number;
   isLoadingTable: boolean;
 
   constructor(private proposalService: ProposalService,
@@ -44,7 +43,7 @@ export class ListProposalComponent implements OnInit {
     this.proposalService.getProposal(params).subscribe(
       (data) => {
         this.proposal = data.items
-        this.totalItems = data.totalItems
+        this.totalRecords = data.totalItems
         this.isLoadingTable = false
       },
       error => {

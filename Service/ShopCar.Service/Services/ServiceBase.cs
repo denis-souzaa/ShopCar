@@ -24,6 +24,16 @@ namespace ShopCar.Service.Services
             return _repository.Count(whereColumn,whereValue, includes);
         }
 
+        public int Count(Expression<Func<T, bool>> predicate)
+        {
+            return _repository.Count(predicate);
+        }
+
+        public IList<T> GetAll(params Expression<Func<T, object>>[] includes)
+        {
+            return _repository.GetAll();
+        }
+
         public void Delete(int id)
         {
             _repository.Delete(id);
@@ -32,6 +42,11 @@ namespace ShopCar.Service.Services
         public T Get(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
         {
             return _repository.Get(predicate,includes);
+        }
+
+        public IList<T> GetAll(Expression<Func<T, bool>> predicate, string order, int skip = 0, int take = 10, params Expression<Func<T, object>>[] includes)
+        {
+            return _repository.GetAll(predicate, order, skip, take, includes);
         }
 
         public IList<T> GetAll<TColumn>(Expression<Func<T, TColumn>> whereColumn, object whereValue ,string order, int skip = 0, int take = 10, params Expression<Func<T, object>>[] includes)

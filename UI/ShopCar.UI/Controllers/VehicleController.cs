@@ -24,9 +24,9 @@ namespace ShopCar.UI.Controllers
         {
             model.PageNumber = model.PageNumber == 0 ? 1 : model.PageNumber;
 
-            var list = _vehicleService.GetAll(x => x.Model, model.SearchTerm, "Year ASC", model.PageSize * (model.PageNumber - 1) , model.PageSize, x=>x.Brand);
+            var list = _vehicleService.GetAll( model.SearchTerm, "Year DESC", model.PageSize * (model.PageNumber - 1) , model.PageSize);
 
-            var totalItems = _vehicleService.Count(x => x.Model, model.SearchTerm);
+            var totalItems = _vehicleService.Count(model.SearchTerm);
 
             var totalPages = (double)totalItems / model.PageSize;
 
@@ -36,7 +36,7 @@ namespace ShopCar.UI.Controllers
                 {
                     x.Id,
                     Brand = x.Brand?.Name,
-                    Name = x.Model,
+                    x.Model,
                     x.Year,
                     x.Price,
                     x.Sold
@@ -51,9 +51,26 @@ namespace ShopCar.UI.Controllers
         [HttpGet("{id}")]
         public ActionResult Get(int id)
         {
-            var car = _vehicleService.Get(x => x.Id == id);
+            var vehicle = _vehicleService.Get(x => x.Id == id);
 
-            return Ok(car);
+            return Ok(vehicle);
+        }
+
+        [HttpGet("{term}/busca")]
+        public ActionResult Get(string term)
+        {
+            var list = _vehicleService.GetAllNotSold(term);
+
+            var result = list.Select(x => new
+            {
+                x.Id,
+                x.Model,
+                x.Year,
+                x.Price,
+                brand = x.Brand?.Name
+            });
+
+            return Ok(result);
         }
 
         [HttpPost]
@@ -61,7 +78,7 @@ namespace ShopCar.UI.Controllers
         {
             _vehicleService.Insert(model);
 
-            return Ok("Veiculo inserido com sucesso");
+            return Ok(new {message = "Veiculo inserido com sucesso"});
         }
 
         [HttpPut]
@@ -69,7 +86,7 @@ namespace ShopCar.UI.Controllers
         {
             _vehicleService.Update(model);
 
-            return Ok("Veiculo atualizado com sucesso");
+            return Ok(new {message = "Veiculo atualizado com sucesso"});
         }
 
         [HttpPatch("{id}")]
@@ -77,7 +94,7 @@ namespace ShopCar.UI.Controllers
         {
             _vehicleService.UpdateSale(id);
 
-            return Ok("O status do veiculo foi atualizado com sucesso");
+            return Ok(new {message = "O status do veiculo foi atualizado com sucesso"});
         }
 
         [HttpDelete("{id}")]
@@ -85,7 +102,7 @@ namespace ShopCar.UI.Controllers
         {
             _vehicleService.Delete(id);
 
-            return Ok("Veiculo excluído com sucesso");
+            return Ok(new {message = "Veiculo excluído com sucesso"});
         }
     }
 }

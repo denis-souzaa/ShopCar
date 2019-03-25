@@ -19,7 +19,6 @@ import { ErrorInterceptor } from './shared/_helpers/error.interceptor';
 
 import { NotificationsService } from './shared/_services/notifications.service';
 import { SnotifyService, ToastDefaults, SnotifyModule } from 'ng-snotify';
-import {NgxCurrencyModule} from "ngx-currency";
 
 @NgModule({
   imports: [

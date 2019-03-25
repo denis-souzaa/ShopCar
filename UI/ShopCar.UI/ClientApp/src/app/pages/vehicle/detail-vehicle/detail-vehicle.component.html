@@ -1,3 +1,57 @@
-<p>
-  detail-car works!
-</p>
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Detalhes do Veículo - #{{id}}</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-6">
+      <strong class="text-muted">Veículo</strong>
+      <h5>{{brand}} {{model}}</h5>
+    </div>
+    <div class="col-6">
+      <strong class="text-muted">Preço</strong>
+      <h5>{{price | currency:'BRL'}}</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <strong class="text-muted">Ano do Veículo</strong>
+      <h5>{{year}}</h5>
+    </div>
+    <div class="col-6">
+      <strong class="text-muted">Vendido</strong>
+      <h5>{{sold | sold:sold}}</h5>
+    </div>
+  </div>
+  <hr />
+  <h4>Propostas</h4>
+  <p-table [columns]="cols" [value]="proposal" [lazy]="true" (onLazyLoad)="loadProposalLazy($event)" [paginator]="true"
+    [rows]="10" [totalRecords]="totalRecords" [loading]="isLoadingTable">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th>Data</th>
+        <th>Valor</th>
+        <th>Cliente</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-proposal>
+      <tr>
+        <td>{{proposal.dateProposal | date:'dd/MM/yyyy'}}</td>
+        <td>{{proposal.amount | currency:'BRL'}}</td>
+        <td>{{proposal.client}}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage" let-columns>
+      <tr>
+        <td [attr.colspan]="3" style="text-align:center;">
+          Nenhuma Proposta encontrada.
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Fechar</button>
+</div>

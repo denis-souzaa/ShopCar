@@ -19,37 +19,58 @@
         </div>
         <div class="card">
             <div class="card-header">
-                <form (ngSubmit)="fetchData()">
-                    <div class="form-row">
-                        <div class="form-group col-md-3">
-                            <label>Nome</label>
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="form-group col-sm-2 col-md-2">
-                            <button class="btn btn-info btn-block" type="submit" style="margin-top: 24px">
-                                <i class="fa fa-search"></i> Buscar
+                <div class="row">
+                    <div class="col-6">
+                        <form (ngSubmit)="fetchVehicles()" [formGroup]="form">
+                            <div class="form">
+                                <div class="input-group mt-2 filter-vehicle">
+                                    <input type="text" class="form-control" placeholder="Marca, veículo"
+                                    formControlName="searchTerm">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-6 text-right">
+                        <div class="form-group">
+                            <button class="btn btn-success" (click)="add()">
+                                <i class="fa fa-plus"></i> Adicionar
                             </button>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
             <div class="card-body">
-                <p-table [columns]="cols" [value]="cars" [lazy]="true" (onLazyLoad)="loadAnunciosLazy($event)"
-                    [paginator]="true" [rows]="10" [totalRecords]="totalRecords" [loading]="loading">
+                <p-table [columns]="cols" [value]="vehicles" [lazy]="true" (onLazyLoad)="loadVehiclesLazy($event)"
+                    [paginator]="true" [rows]="10" [totalRecords]="totalRecords" [loading]="isLoadingTable">
                     <ng-template pTemplate="header" let-columns>
                         <tr>
-                            <th>Marca</th>
+                            <th style="width:120px">Marca</th>
                             <th>Veículo</th>
-                            <th>Ano</th>
+                            <th style="width:60px">Ano</th>
                             <th>Valor</th>
                             <th>Vendido</th>
-                            <th>Ações</th>
+                            <th style="width:200px">Ações</th>
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <ng-template pTemplate="body" let-vehicle>
                         <tr>
-                            <td *ngFor="let col of columns">
-                                {{rowData[col.field]}}
+                            <td>{{vehicle.brand}}</td>
+                            <td>{{vehicle.model}}</td>
+                            <td>{{vehicle.year}}</td>
+                            <td>{{vehicle.price | currency:'BRL'}}</td>
+                            <td>{{(vehicle.sold | sold:vehicle.sold)}}</td>
+                            <td>
+                                <button class="btn btn-default btn-sm" title="Detalhes" (click)="detail(vehicle)"><i
+                                        class="fa fa-search"></i></button>
+                                <button class="btn btn-primary btn-sm" title="Editar" (click)="edit(vehicle)"><i
+                                        class="fa fa-edit"></i></button>
+                                <button class="btn btn-success btn-sm" title="Marcar como vendido" [disabled]="vehicle.sold"
+                                    (click)="changeStatus(vehicle.id)"><i class="fa fa-check-circle "></i></button>
+                                <button class="btn btn-danger btn-sm" title="Excluir" (click)="remove(vehicle.id)"><i
+                                        class="fa fa-trash"></i></button>
                             </td>
                         </tr>
                     </ng-template>

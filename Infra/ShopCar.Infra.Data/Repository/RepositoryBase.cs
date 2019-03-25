@@ -26,6 +26,17 @@ namespace ShopCar.Infra.Data.Repository
             _dbContext.SaveChanges();
         }
 
+        public IList<T> GetAll(params Expression<Func<T, object>>[] includes)
+        {
+            var query = _dbContext.Set<T>().AsNoTracking();
+
+            if (includes.Length <= 0) return query.ToList();
+
+            query = includes.Aggregate(query, (current, inc) => current.Include(inc));
+
+            return query.ToList();
+        }
+
         public int Count<TColumn>(Expression<Func<T, TColumn>> whereColumn, object whereValue, params Expression<Func<T, object>>[] includes)
         {
             var query = _dbContext.Set<T>().AsNoTracking();
@@ -38,6 +49,16 @@ namespace ShopCar.Infra.Data.Repository
             if (whereValue == null) return query.Count();
 
             query = query.Where(whereValue is string ? $"{_reflection.GetFullPropertyName(whereColumn)}.Contains(@0)" : $"{_reflection.GetFullPropertyName(whereColumn)}.Equals(@0)", whereValue);
+
+            return query.Count();
+        }
+
+        public int Count(Expression<Func<T, bool>> predicate)
+        {
+            var query = _dbContext.Set<T>().AsNoTracking();
+
+            if (predicate != null)
+                query = query.Where(predicate);
 
             return query.Count();
         }
@@ -62,6 +83,21 @@ namespace ShopCar.Infra.Data.Repository
             query = includes.Aggregate(query, (current, inc) => current.Include(inc));
 
             return query.FirstOrDefault();
+        }
+
+        public IList<T> GetAll(Expression<Func<T, bool>> predicate, string order, int skip = 0, int take = 10, params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> query = _dbContext.Set<T>().AsNoTracking().OrderBy(order);
+
+            if (includes.Length > 0)
+            {
+                query = includes.Aggregate(query, (current, inc) => current.Include(inc));
+            }
+
+            if (predicate != null)
+                query = query.Where(predicate);
+
+            return query.Skip(skip).Take(take).ToList();
         }
 
         public IList<T> GetAll<TColumn>(Expression<Func<T, TColumn>> whereColumn, object whereValue, string order, int skip = 0, int take = 10, params Expression<Func<T, object>>[] includes)
